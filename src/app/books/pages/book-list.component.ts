@@ -1,11 +1,5 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
-
-export type bookData = { 
-    id: string; 
-    title: string; 
-    author: string; 
-    year: number;
-};
+import { BookData } from '../types';
 
 @Component({
     selector: 'app-book-list',
@@ -38,7 +32,7 @@ export type bookData = {
         </div>
     `,
     styles: ``
-})
+})  
 export class BookListComponent {
-    books = input.required<bookData[] | undefined>();
+    books = input.required<BookData[]>();
 }

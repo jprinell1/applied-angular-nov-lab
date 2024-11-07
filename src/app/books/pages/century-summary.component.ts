@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
-import { bookData } from './book-list.component';
+import { BookData } from '../types';
 
 @Component({
     selector: 'app-century-summary',
@@ -30,5 +30,5 @@ import { bookData } from './book-list.component';
     styles: ``
 })
 export class CenturySummaryComponent {
-    books = input.required<bookData[] | undefined>();
+    books = input.required<BookData[]>();
 }

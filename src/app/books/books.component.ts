@@ -1,9 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
-import { bookData, BookListComponent } from './pages/book-list.component';
+import { BookListComponent } from './pages/book-list.component';
 import { CenturySummaryComponent } from './pages/century-summary.component';
+import { BookStore } from './services/books.store';
 
 @Component({
     selector: 'app-books',
@@ -12,12 +10,12 @@ import { CenturySummaryComponent } from './pages/century-summary.component';
     imports: [BookListComponent, CenturySummaryComponent],
     template: `
         <div>
-            @if(clientResponse()) {
+            @if(store.getBookList()) {
                 <div class=pb-20>
-                    <app-book-list [books]="clientResponse()"/>
+                    <app-book-list [books]="store.getBookList()"/>
                 </div>
                 <div>
-                    <app-century-summary [books]="clientResponse()"/>
+                    <app-century-summary [books]="store.getBookList()"/>
                 </div>
             }
         </div>
@@ -25,9 +23,5 @@ import { CenturySummaryComponent } from './pages/century-summary.component';
     styles: ``
 })
 export class BooksComponent {
-    #httpClient$ = inject(HttpClient);  
-    clientResponse = toSignal(this.#httpClient$.get<{
-        data: bookData[];
-    }>('/api/books')
-        .pipe(map((res) => res.data)));
+    store = inject(BookStore);
 }
